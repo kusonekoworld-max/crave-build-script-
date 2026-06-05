@@ -93,7 +93,7 @@ while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
     # Run the crave command
     crave run --projectID 93 --no-patch -- \
 "export TG_MSG_ID='${TG_MSG_ID}'; \
-curl -sf https://raw.githubusercontent.com/nuruszama/crave/creek/crave_run.sh | bash" \
+curl -sf https://raw.githubusercontent.com/nuruszama/crave/main/crave_run.sh | bash" \
 2>&1 | tee "$LOG_FILE"
     
     # Capture the pipeline status thanks to set -o pipefail
