@@ -8,15 +8,6 @@ The scripts automate the entire build lifecycle, including environment preparati
 
 ---
 
-## Features
-
-* **Automated Tooling** – Installs required dependencies such as `jq` automatically when missing.
-* **Smart Sync** – Uses Crave's native resync mechanism for faster and more reliable source synchronization.
-* **Real-Time Notifications** – Sends build status updates, sync progress, timings, and error logs directly to Telegram.
-* **Artifact Hosting** – Automatically uploads successful build packages (`.zip`) to PixelDrain.
-
----
-
 ## Prerequisites
 
 Before getting started, make sure you have:
