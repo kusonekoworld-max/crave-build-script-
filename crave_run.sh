@@ -21,7 +21,7 @@ ${1}"
     response=$(curl -sS \
         -X POST \
         "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
-        --data-urlencode "chat_id=${TG_CHAT_ID}" \
+        --data-urlencode "chat_id=${TG_CHAT}" \
         --data-urlencode "parse_mode=Markdown" \
         --data-urlencode "disable_web_page_preview=true" \
         --data-urlencode "text=${BUILD_HISTORY}")
@@ -48,7 +48,7 @@ ${1}"
     curl -sS \
         -X POST \
         "https://api.telegram.org/bot${TG_TOKEN}/editMessageText" \
-        --data-urlencode "chat_id=${TG_CHAT_ID}" \
+        --data-urlencode "chat_id=${TG_CHAT}" \
         --data-urlencode "message_id=${TG_MSG_ID}" \
         --data-urlencode "parse_mode=Markdown" \
         --data-urlencode "disable_web_page_preview=true" \
@@ -67,7 +67,7 @@ ${1}"
     curl -sS \
         -X POST \
         "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
-        --data-urlencode "chat_id=${TG_CHAT_ID}" \
+        --data-urlencode "chat_id=${TG_CHAT}" \
         --data-urlencode "parse_mode=Markdown" \
         --data-urlencode "disable_web_page_preview=true" \
         --data-urlencode "reply_parameters={\"message_id\":${TG_MSG_ID}}" \
@@ -149,7 +149,7 @@ fi
 echo ""
 
 # Clone local manifests
-git clone https://github.com/nuruszama/local_manifest.git -b creek .repo/local_manifests
+git clone https://github.com/nuruszama/local_manifest.git -b main .repo/local_manifests
 if [ $? -ne 0 ]; then
     text="Failed to clone local manifests. Exiting."
     telegram_reply "${text}"
