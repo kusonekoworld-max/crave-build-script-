@@ -8,6 +8,15 @@ The scripts automate the entire build lifecycle, including environment preparati
 
 ---
 
+## Features
+
+* **Automated Tooling** – Installs required dependencies such as `jq` automatically when missing.
+* **Smart Sync** – Uses Crave's native resync mechanism for faster and more reliable source synchronization.
+* **Real-Time Notifications** – Sends build status updates, sync progress, timings, and error logs directly to Telegram.
+* **Artifact Hosting** – Automatically uploads successful build packages (`.zip`) to PixelDrain.
+
+---
+
 ## Prerequisites
 
 Before getting started, make sure you have:
@@ -25,7 +34,12 @@ Before getting started, make sure you have:
 Create a dedicated folder for your device inside your DevSpace:
 
 ```bash
+cd /crave-devspaces
+```
+```bash
 mkdir -p los/<device>
+```
+```bash
 cd los/<device>
 ```
 
@@ -46,7 +60,7 @@ crave clone list
 Example output:
 
 ```text
-admin@foss:/crave-devspaces/los/creek$ crave clone list
+admin@foss:/crave-devspaces/los/<device>$ crave clone list
 
 Projects:
 
@@ -105,6 +119,9 @@ The remaining steps describe the workflow used in this repository. Feel free to 
 Create a `.env` file in the project root directory:
 
 ```bash
+cd /crave-devspaces/los/<device>
+```
+```bash
 nano .env
 ```
 
@@ -140,6 +157,9 @@ OTA_URL=""
 After creating the file, push it to the build container:
 
 ```bash
+cd /crave-devspaces/los/<device>
+```
+```bash
 crave push .env -d /tmp/src/android
 ```
 
@@ -149,8 +169,11 @@ This allows the build environment to access the same configuration and secrets.
 
 ## Step 5 – Create the Build Launcher Script
 
-Create a simple launcher script in the project root:
+Create a simple launcher script in the crave-devspace root dir:
 
+```bash
+cd /crave-devspaces
+```
 ```bash
 nano build.sh
 ```
@@ -160,14 +183,7 @@ Paste the following:
 ```bash
 #!/bin/bash
 
-# Ensure we are in the script directory
-cd "$(dirname "$0")"
-
-# Verify .env exists
-if [ ! -f ".env" ]; then
-    echo ".env file not found"
-    exit 1
-fi
+cd los/<device>
 
 curl -sf https://raw.githubusercontent.com/nuruszama/crave/main/build_queue.sh | bash
 ```
@@ -203,7 +219,6 @@ Update the corresponding manifest URL inside `crave_run.sh` so the build system 
 Once everything is configured, start a build with:
 
 ```bash
-cd los/<device>
 ./build.sh
 ```
 
@@ -214,6 +229,19 @@ The script will automatically handle:
 * Build execution
 * Telegram notifications
 * Artifact uploads
+
+---
+
+## Step 9 – Only if neccessary
+
+After completing and when you want to close your project in crave, you can destroy your project directory using
+
+```
+crave clone destry ./<project_folder/dir>
+```
+
+Avoid using rm -rf command to destroy the project folder since it will use more resource and affect other users.
+
 
 ---
 
