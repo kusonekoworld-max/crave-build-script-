@@ -10,7 +10,7 @@ BUILD_LOG="build.log"
 
 # Check if .env file exists
 if [ ! -f ".env" ]; then
-    print_step "⚠️ .env file not found!"
+    echo "⚠️ .env file not found!"
     # define 
     DEVICE="creek"
     BUILD_TYPE="user-debug"
