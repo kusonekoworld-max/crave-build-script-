@@ -2,6 +2,7 @@
 
 # Optional: ensure we are in correct directory
 cd "$(dirname "$0")"
+clear
 
 # Check if .env file exists
 if [ ! -f ".env" ]; then echo "⚠️ .env file not found! Exiting ..."
