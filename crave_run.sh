@@ -6,8 +6,6 @@
 # set pipelined command flow
 set -o pipefail
 
-# Shared state
-: "${ID:=}"
 BUILD_LOG="build.log"
 
 # Check if .env file exists
