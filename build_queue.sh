@@ -25,11 +25,11 @@ rm -f "$LOG_FILE"
 
 # crave queue and retry logic
 MAX_ATTEMPTS=2
-ATTEMPT=1
+ATTEMPT=0
 DELAY_TIME="1m" # 1 minutes delay
 
 while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
-    print_text "          attempting build queue ~$((ATTEMPT + 1))..."
+    print_text "          attempting build queue ~$((ATTEMPT))..."
 
     # Run the crave command
     crave run --projectID 93 --no-patch -- "curl -sf https://raw.githubusercontent.com/nuruszama/crave/creek/crave_run.sh | bash" 2>&1 | tee "$LOG_FILE"
@@ -57,7 +57,6 @@ while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
         else
             if [ $ATTEMPT -lt $MAX_ATTEMPTS ]; then
                 ((ATTEMPT++)) # Safely move to next attempt loop
-                print_text "          attempting build queue ~$((ATTEMPT + 1))..."
                 sleep $DELAY_TIME
             else
                 print_text "  Build terminated with ${ATTEMPT} attempts."
