@@ -19,7 +19,7 @@ LOG_FILE="crave_build.log"
 rm -f "$LOG_FILE"
 
 # crave queue and retry logic
-MAX_ATTEMPTS=2
+MAX_ATTEMPTS=4
 ATTEMPT=1
 DELAY_TIME="1m" # 1 minutes delay
 
