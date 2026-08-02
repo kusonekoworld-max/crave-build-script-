@@ -5,13 +5,13 @@ clear
 rm -rf "creek_build_*.log"
 rm -rf "extract_*.log"
 
-
 # Define some requirements
 BUILD_DIR="/home/creek/android/lineage"
 BUILD_LOG="creek_build_$(date +%s).log"
 export BUILD_USERNAME="a.s.k"
 export BUILD_HOSTNAME="thaz"
 export SKIP_ABI_CHECKS=true
+export WITH_DEXPREOPT=true
 
 # remove device tree
 rm -rf device/xiaomi/creek
