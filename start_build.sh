@@ -28,7 +28,7 @@ repo sync
 git clone https://github.com/XiaomiCreek/redmi_creek_dump.git -b missi-user-16-BP2A.250605.031.A3-OS3.0.302.0.WBOMIXM-release-keys /home/creek/android/lineage/device/xiaomi/creek-dump
 
 # setup build env
-source vendorextract.sh 2>&1 | tee "extract_$(date +%s).log"
+source vendor_extract.sh 2>&1 | tee "extract_$(date +%s).log"
 source build/envsetup.sh
 
 # prepare device menu
