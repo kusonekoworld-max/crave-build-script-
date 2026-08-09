@@ -13,7 +13,7 @@ if [ ! -f ".env" ]; then
     echo "⚠️ .env file not found!"
     # define 
     DEVICE="creek"
-    BUILD_TYPE="user-debug"
+    BUILD_TYPE="eng"
 fi
 
 # Load your local secrets
