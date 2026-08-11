@@ -28,6 +28,11 @@ print_step() {
     echo ""
 }
 
+print_exit() {
+    telegram_reply "$1"
+    echo "$1"
+    exit 1
+
 # Send telegram message
 telegram_send() {
     # Append new log entry
@@ -161,7 +166,7 @@ remove=(
     vendor/xiaomi/creek
 )
 
-# Efficiently remove all of them
+# remove all mentioned above
 for FILE in "${remove[@]}"; do
     [ -e "$FILE" ] && echo "    Removing: $FILE"
     rm -rf "$FILE"
@@ -171,30 +176,21 @@ done
 print_step "repo init"
 repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs --depth=1
 if [ $? -ne 0 ]; then
-    text="Repo initialization failed. Exiting."
-    telegram_reply "${text}"
-    echo "${text}"
-    exit 1
+    print_exit "Repo initialization failed. Exiting."
 fi
 
 # Clone or update local manifests
 print_step "Cloning local manifests..."
 git clone https://github.com/XiaomiCreek/LineageOS.git -b 16 .repo/local_manifests --depth=1 --quiet
 if [ $? -ne 0 ]; then
-    text="Failed to setup local manifests. Exiting."
-    telegram_reply "${text}"
-    echo "${text}"
-    exit 1
+    print_exit "Failed to setup local manifests. Exiting."
 fi
 
 # Sync the repositories using the Crave sync script
 print_step "resync the source and device tree"
 /opt/crave/resync.sh
 if [ $? -ne 0 ]; then
-    text="Crave sync failed. Exiting."
-    telegram_reply "${text}"
-    echo "${text}"
-    exit 1
+    print_exit "Crave sync failed. Exiting."
 fi
 
 # Build environment setup
@@ -205,10 +201,7 @@ source build/envsetup.sh
 print_step "setting up breakfast"
 breakfast ${DEVICE} ${BUILD_TYPE}
 if [ $? -ne 0 ]; then
-    text="Breakfast failed. Exiting."
-    telegram_reply "${text}"
-    echo "${text}"
-    exit 1
+    print_exit "Breakfast failed. Exiting."
 fi
 
 print_step "baconing the rom hot"
