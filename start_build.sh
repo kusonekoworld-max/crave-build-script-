@@ -9,10 +9,6 @@ export SKIP_ABI_CHECKS=true
 export WITH_DEXPREOPT=true
 
 # remove device tree
-rm -rf hardware/qcom-caf/sm6225
-rm -rf device/xiaomi/sepolicy
-rm -rf hardware/xiaomi
-
 rm -rf .repo/local_manifests
 rm -rf device/xiaomi/creek
 rm -rf device/xiaomi/creek-kernel
@@ -28,7 +24,7 @@ git clone https://github.com/XiaomiCreek/LineageOS.git -b 16 --depth=1 .repo/loc
 if [ -x "/opt/crave/resync.sh" ]; then
     /opt/crave/resync.sh
 else
-    repo sync --force-sync -c -j$(nproc --all) --no-clone-bundle --no-tags
+    repo sync --force-sync
 fi
 
 # extract vendor tree
