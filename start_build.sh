@@ -29,7 +29,9 @@ git clone https://github.com/XiaomiCreek/LineageOS.git -b 16 --depth=1 .repo/loc
 repo sync -j16 --force-sync
 
 # extract vendor tree
-source vendorextract.sh 2>&1 | tee "extract_log.txt"
+curl -sfLo vendorextract.sh -z vendorextract.sh https://raw.githubusercontent.com/nuruszama/crave/creek/vendorextract.sh
+chmod +x vendorextract.sh
+./vendorextract.sh 2>&1 | tee "extract_log.txt"
 
 # setup build env
 source build/envsetup.sh
