@@ -20,9 +20,11 @@ if [ ! -d "$DEVICE_TREE" ]; then
     exit 1
 fi
 
+cd "$DEVICE_TREE"
+
 # extract the vendor tree directly using absolute paths
 export PATCHELF=$(which patchelf)
-PYTHONPATH="$TOOLS" python3 "$DEVICE_TREE/extract-files.py" "$DUMP"
+PYTHONPATH="$TOOLS" python3 ./extract-files.py "$DUMP"
 
 echo ""
 echo "extraction completed"
