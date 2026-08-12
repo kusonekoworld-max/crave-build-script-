@@ -14,6 +14,9 @@ rm -rf device/xiaomi/creek
 rm -rf device/xiaomi/creek-kernel
 rm -rf vendor/xiaomi/creek
 
+rm -rf packages/apps/FastCharge
+rm -rf hardware/dolby
+
 # re-initialize the lineage source
 repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs --depth=1
 
