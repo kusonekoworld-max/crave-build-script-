@@ -22,7 +22,7 @@ fi
 
 # extract the vendor tree directly using absolute paths
 export PATCHELF=$(which patchelf)
-PYTHONPATH="$TOOLS:$DEVICE_TREE" python3 "$DEVICE_TREE/extract-files.py" "$DUMP"
+PYTHONPATH="$TOOLS" python3 "$DEVICE_TREE/extract-files.py" "$DUMP"
 
 echo ""
 echo "extraction completed"
