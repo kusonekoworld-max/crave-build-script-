@@ -14,18 +14,21 @@ DEVICE_TREE="$ANDROID_BUILD_TOP/device/xiaomi/creek"
 TOOLS="$ANDROID_BUILD_TOP/tools/extract-utils"
 DUMP="$ANDROID_BUILD_TOP/device/xiaomi/creek-dump"
 
-# Verify device tree folder exists
-if [ ! -d "$DEVICE_TREE" ]; then
-    echo "Error: Cannot access device tree folder at $DEVICE_TREE"
+# Run inside a subshell so cd doesn't affect the caller's environment
+(
+    cd "$DEVICE_TREE" || exit 1
+    export PATCHELF=$(which patchelf)
+    PYTHONPATH="$TOOLS" python3 ./extract-files.py "$DUMP"
+)
+
+# Capture exit status of the subshell
+if [ $? -eq 0 ]; then
+    echo ""
+    echo "extraction completed successfully"
+    echo ""
+else
+    echo ""
+    echo "Error: Vendor extraction failed!"
+    echo ""
     exit 1
 fi
-
-cd "$DEVICE_TREE"
-
-# extract the vendor tree directly using absolute paths
-export PATCHELF=$(which patchelf)
-PYTHONPATH="$TOOLS" python3 ./extract-files.py "$DUMP"
-
-echo ""
-echo "extraction completed"
-echo ""
