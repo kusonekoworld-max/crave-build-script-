@@ -1,8 +1,6 @@
 #!/bin/bash
 
-# remove leftover
 clear
-rm -rf extract_log.txt
 
 # Define some requirements
 export BUILD_USERNAME="a.s.k"
@@ -23,7 +21,11 @@ repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs 
 git clone https://github.com/XiaomiCreek/LineageOS.git -b 16 --depth=1 .repo/local_manifests
 
 # resync the repo source
-repo sync --force-sync
+if [ -x "/opt/crave/resync.sh" ]; then
+    /opt/crave/resync.sh
+else
+    repo sync --force-sync -c -j$(nproc --all) --no-clone-bundle --no-tags
+fi
 
 # extract vendor tree
 curl -sfLo vendorextract.sh -z vendorextract.sh https://raw.githubusercontent.com/nuruszama/crave/creek/vendorextract.sh
