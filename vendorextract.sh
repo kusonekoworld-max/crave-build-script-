@@ -5,6 +5,8 @@ if [ -z "$ANDROID_BUILD_TOP" ]; then
     ANDROID_BUILD_TOP="$(pwd)"
 fi
 
+git clone -b missi-user-16-BP2A.250605.031.A3-OS3.0.302.0.WBOMIXM-release-keys https://github.com/XiaomiCreek/redmi_creek_dump.git --depth=1 device/xiaomi/device-dump
+
 echo ""
 echo "extracting vendor tree"
 echo ""
