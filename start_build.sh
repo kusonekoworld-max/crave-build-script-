@@ -5,7 +5,6 @@ clear
 rm -rf extract_log.txt
 
 # Define some requirements
-BUILD_DIR="/home/creek/android/lineage"
 BUILD_LOG="creek_build_$(date +%s).log"
 
 export BUILD_USERNAME="a.s.k"
