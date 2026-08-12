@@ -5,8 +5,6 @@ if [ -z "$ANDROID_BUILD_TOP" ]; then
     ANDROID_BUILD_TOP="$(pwd)"
 fi
 
-git clone -b missi-user-16-BP2A.250605.031.A3-OS3.0.302.0.WBOMIXM-release-keys https://github.com/XiaomiCreek/redmi_creek_dump.git --depth=1 device/xiaomi/device-dump
-
 echo ""
 echo "extracting vendor tree"
 echo ""
@@ -15,6 +13,19 @@ echo ""
 DEVICE_TREE="$ANDROID_BUILD_TOP/device/xiaomi/creek"
 TOOLS="$ANDROID_BUILD_TOP/tools/extract-utils"
 DUMP="$ANDROID_BUILD_TOP/device/xiaomi/creek-dump"
+
+# Check whether device dump exists; clone if missing
+if [ ! -d "$DUMP" ]; then
+    echo "Dump directory not found. Cloning firmware dump..."
+    git clone -b missi-user-16-BP2A.250605.031.A3-OS3.0.302.0.WBOMIXM-release-keys https://github.com/XiaomiCreek/redmi_creek_dump.git --depth=1 "$DUMP"
+    
+    if [ $? -ne 0 ]; then
+        echo "Error: Failed to clone dump repository!"
+        exit 1
+    fi
+else
+    echo "Dump directory found at $DUMP. Skipping clone."
+fi
 
 # Run inside a subshell so cd doesn't affect the caller's environment
 (
