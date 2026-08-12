@@ -21,11 +21,7 @@ repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs 
 git clone https://github.com/XiaomiCreek/LineageOS.git -b 16 --depth=1 .repo/local_manifests
 
 # resync the repo source
-if [ -x "/opt/crave/resync.sh" ]; then
-    /opt/crave/resync.sh
-else
-    repo sync --force-sync
-fi
+repo sync --force-sync
 
 # extract vendor tree
 curl -sfLo vendorextract.sh -z vendorextract.sh https://raw.githubusercontent.com/nuruszama/crave/creek/vendorextract.sh
