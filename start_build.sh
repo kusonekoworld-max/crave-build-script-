@@ -5,7 +5,6 @@ clear
 rm -rf extract_log.txt
 
 # Define some requirements
-BUILD_LOG="creek_build_$(date +%s).log"
 
 export BUILD_USERNAME="a.s.k"
 export BUILD_HOSTNAME="thazz"
@@ -42,4 +41,4 @@ breakfast creek eng
 make installclean
 
 # start building
-m bacon 2>&1 | tee "$BUILD_LOG"
+m bacon
