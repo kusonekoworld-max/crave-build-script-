@@ -28,7 +28,7 @@ repo sync --force-sync
 # extract vendor tree
 curl -sfLo vendorextract.sh -z vendorextract.sh https://raw.githubusercontent.com/nuruszama/crave/creek/vendorextract.sh
 chmod +x vendorextract.sh
-./vendorextract.sh 2>&1 | tee "extract_log.txt"
+./vendorextract.sh
 
 # setup build env
 source build/envsetup.sh
