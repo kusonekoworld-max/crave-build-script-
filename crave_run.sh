@@ -164,6 +164,8 @@ remove=(
     .repo/local_manifests
     device/xiaomi/creek
     vendor/xiaomi/creek
+    packages/apps/FastCharge
+    hardware/dolby
 )
 
 # remove all mentioned above
