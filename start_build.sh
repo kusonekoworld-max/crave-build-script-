@@ -5,7 +5,6 @@ clear
 rm -rf extract_log.txt
 
 # Define some requirements
-
 export BUILD_USERNAME="a.s.k"
 export BUILD_HOSTNAME="thazz"
 export SKIP_ABI_CHECKS=true
