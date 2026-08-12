@@ -19,9 +19,6 @@ rm -rf hardware/qcom-caf/common
 rm -rf device/xiaomi/creek
 rm -rf device/xiaomi/creek-kernel
 rm -rf vendor/xiaomi/creek
-rm -rf packages/apps/FastCharge
-rm -rf hardware/dolby
-rm -rf hardware/xiaomi
 rm -rf device/xiaomi/sepolicy
 rm -rf .repo/local_manifests/
 
@@ -71,8 +68,6 @@ git clone --depth 1 -b lineage-23.2 https://github.com/sapphire-sm6225/android_v
 
 # extract vendor tree
 source vendorextract.sh 2>&1 | tee "extract_log.txt"
-
-rm -rf device/xiaomi/creek/vendorsetup.sh
 
 # setup build env
 source build/envsetup.sh
