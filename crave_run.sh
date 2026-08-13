@@ -32,6 +32,7 @@ print_exit() {
     telegram_reply "$1"
     echo "$1"
     exit 1
+}
 
 # Send telegram message
 telegram_send() {
