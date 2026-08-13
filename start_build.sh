@@ -9,6 +9,7 @@ export SKIP_ABI_CHECKS=true
 export WITH_DEXPREOPT=true
 
 # remove device tree
+rm -rf hardware/qcom-caf/sm6225
 rm -rf .repo/local_manifests
 rm -rf device/xiaomi/creek
 rm -rf device/xiaomi/creek-kernel
