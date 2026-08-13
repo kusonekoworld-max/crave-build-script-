@@ -28,6 +28,9 @@ curl -sfLo vendorextract.sh -z vendorextract.sh https://raw.githubusercontent.co
 chmod +x vendorextract.sh
 ./vendorextract.sh
 
+# remove conflicting soong_namespace
+rm -rf hardware/qcom-caf/sm6225/data-ipa-cfg-mgr/Android.bp
+
 # setup build env
 source build/envsetup.sh
 
