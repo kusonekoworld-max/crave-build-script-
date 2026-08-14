@@ -9,9 +9,6 @@ export SKIP_ABI_CHECKS=true
 export WITH_DEXPREOPT=true
 
 # remove device tree
-rm -rf hardware/dolby
-rm -rf hardware/xiaomi
-rm -rf packages/apps/FastCharge
 rm -rf hardware/qcom-caf/sm6225
 rm -rf .repo/local_manifests
 rm -rf device/xiaomi/creek
