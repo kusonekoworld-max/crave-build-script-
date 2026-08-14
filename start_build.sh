@@ -12,6 +12,7 @@ export WITH_DEXPREOPT=true
 rm -rf hardware/qcom-caf/sm6225
 rm -rf .repo/local_manifests
 rm -rf device/xiaomi/creek
+rm -rf device/xiaomi/sepolicy
 rm -rf device/xiaomi/creek-kernel
 rm -rf vendor/xiaomi/creek
 
