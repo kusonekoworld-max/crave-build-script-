@@ -12,7 +12,7 @@ echo ""
 # define directories
 DEVICE_TREE="$ANDROID_BUILD_TOP/device/xiaomi/creek"
 TOOLS="$ANDROID_BUILD_TOP/tools/extract-utils"
-DUMP="$ANDROID_BUILD_TOP/device/xiaomi/creek-dump"
+DUMP="$ANDROID_BUILD_TOP/device/xiaomi/creek-dump-3.0.302"
 
 # Check whether device dump exists; clone if missing
 if [ ! -d "$DUMP" ]; then

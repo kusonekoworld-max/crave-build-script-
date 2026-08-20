@@ -184,7 +184,7 @@ fi
 
 # Clone or update local manifests
 print_step "Cloning local manifests..."
-git clone https://github.com/XiaomiCreek/LineageOS.git -b 16 .repo/local_manifests --depth=1 --quiet
+git clone https://github.com/XiaomiCreek/android.git -b 16 .repo/local_manifests --depth=1 --quiet
 if [ $? -ne 0 ]; then
     print_exit "Failed to setup local manifests. Exiting."
 fi
