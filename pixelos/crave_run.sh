@@ -16,6 +16,10 @@ repo init -u https://github.com/PixelOS-AOSP/android_manifest.git -b seventeen -
 #clone local manifest
 git clone https://github.com/XiaomiCreek/android.git -b PixelOS-17 --depth=1 .repo/local_manifests
 
+# Custom Source 
+rm -rf build/soong
+git clone https://github.com/YoshikawaYuuko/android_build_soong.git -b seventeen build/soong
+
 # resync the repo source
 /opt/crave/resync.sh
 
