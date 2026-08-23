@@ -29,7 +29,7 @@ EOF
 source build/envsetup.sh
 
 # prepare device menu
-breakfast creek
+breakfast creek userdebug
 
 # Clean intermediate cached system properties and staging dirs
 make installclean
