@@ -27,7 +27,6 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     persist.ota.url=${OTA_URL}
 EOF
 
-
 # setup build env
 source build/envsetup.sh
 
@@ -43,7 +42,7 @@ m pixelos
 # Upload
 echo "upload to gofile..."
 if [ -f out/target/product/creek/*202608*.zip ]; then
-    wget https://raw.githubusercontent.com/nuruszama/crave/creek/tools/GoFile-upload.sh
+    curl -sfLo upload.sh -z upload.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/GoFile-upload.sh
     chmod +x upload.sh ; ./upload.sh out/target/product/earth/*.zip
     echo "upload done!"
 else
