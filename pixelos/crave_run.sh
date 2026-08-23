@@ -39,3 +39,14 @@ make installclean
 
 # start building
 m pixelos
+
+# Upload
+echo "upload to gofile..."
+if [ -f out/target/product/creek/*202608*.zip ]; then
+    wget https://raw.githubusercontent.com/nuruszama/crave/creek/tools/GoFile-upload.sh
+    chmod +x upload.sh ; ./upload.sh out/target/product/earth/*.zip
+    echo "upload done!"
+else
+    echo "no zip found at out/ dir..."
+    exit 1
+fi
