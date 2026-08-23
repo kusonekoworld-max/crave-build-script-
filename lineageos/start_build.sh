@@ -25,7 +25,7 @@ git clone https://github.com/XiaomiCreek/android.git -b 16 --depth=1 .repo/local
 repo sync -j16 --force-sync
 
 # extract vendor tree
-curl -sfLo vendorextract.sh -z vendorextract.sh https://raw.githubusercontent.com/nuruszama/crave/creek/vendorextract.sh
+curl -sfLo vendorextract.sh -z vendorextract.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/vendorextract.sh
 chmod +x vendorextract.sh
 ./vendorextract.sh
 

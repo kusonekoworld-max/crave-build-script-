@@ -37,10 +37,10 @@ Create a dedicated folder for your device inside your DevSpace:
 cd /crave-devspaces
 ```
 ```bash
-mkdir -p los/<device>
+mkdir -p <device>
 ```
 ```bash
-cd los/<device>
+cd <device>
 ```
 
 Replace `<device>` with your device codename.
@@ -119,7 +119,7 @@ The remaining steps describe the workflow used in this repository. Feel free to 
 Create a `.env` file in the project root directory:
 
 ```bash
-cd /crave-devspaces/los/<device>
+cd /crave-devspaces/<device>
 ```
 ```bash
 nano .env
@@ -157,7 +157,7 @@ OTA_URL=""
 After creating the file, push it to the build container:
 
 ```bash
-cd /crave-devspaces/los/<device>
+cd /crave-devspaces/<device>
 ```
 ```bash
 crave push .env -d /tmp/src/android
@@ -178,14 +178,14 @@ cd /crave-devspaces
 nano build.sh
 ```
 
-Paste the following:
+Paste the following: (described based on this repo)
 
 ```bash
 #!/bin/bash
 
-cd los/<device>
+cd <device>
 
-curl -sf https://raw.githubusercontent.com/nuruszama/crave/main/build_queue.sh | bash
+curl -sf https://raw.githubusercontent.com/nuruszama/crave/creek/build_queue.sh | bash
 ```
 
 ### Note
