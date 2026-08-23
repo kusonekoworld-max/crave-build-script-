@@ -11,10 +11,10 @@ export OTA_URL="https://xiaomicreek.github.io/OTA/PixelOS/builds/creek.json"
 rm -rf .repo/local_manifests
 
 # re-initialize the lineage source
-repo init -u https://github.com/PixelOS-AOSP/android_manifest.git -b sixteen-qpr2 --git-lfs --depth=1
+repo init -u https://github.com/PixelOS-AOSP/android_manifest.git -b seventeen --git-lfs --depth=1
 
 #clone local manifest
-git clone https://github.com/XiaomiCreek/android.git -b PixelOS-16-qpr2 --depth=1 .repo/local_manifests
+git clone https://github.com/XiaomiCreek/android.git -b PixelOS-17 --depth=1 .repo/local_manifests
 
 # resync the repo source
 /opt/crave/resync.sh
