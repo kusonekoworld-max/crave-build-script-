@@ -22,8 +22,11 @@ git clone https://github.com/XiaomiCreek/android.git -b PixelOS-16-qpr2 --depth=
 # dynamically inject ota.mk into device tree
 cat << EOF > device/xiaomi/creek/ota.mk
 # Dynamically generated during build script execution
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += lineage.updater.uri=${OTA_URL}
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    lineage.updater.uri=${OTA_URL} \
+    persist.ota.url=${OTA_URL}
 EOF
+
 
 # setup build env
 source build/envsetup.sh
