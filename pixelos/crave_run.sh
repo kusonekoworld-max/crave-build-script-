@@ -20,11 +20,14 @@ git clone https://github.com/XiaomiCreek/android.git -b PixelOS-16 --depth=1 .re
 /opt/crave/resync.sh
 
 # dynamically inject ota.mk into device tree
-cat << EOF > device/xiaomi/creek/ota.mk
-# Dynamically generated during build script execution
+cat << EOF > device/xiaomi/creek/features.mk
+# OTA url for future updates
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     lineage.updater.uri=${OTA_URL} \
     persist.ota.url=${OTA_URL}
+
+# Inherit FastCharge configurations
+$(call inherit-product, packages/apps/FastCharge/fastcharge.mk)
 EOF
 
 # setup build env
