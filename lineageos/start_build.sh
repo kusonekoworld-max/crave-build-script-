@@ -20,7 +20,7 @@ rm -rf vendor/xiaomi/creek
 repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs --depth=1
 
 #clone local manifest
-git clone https://github.com/XiaomiCreek/android.git -b 16 --depth=1 .repo/local_manifests
+git clone https://github.com/XiaomiCreek/android.git -b lineage-23.2 --depth=1 .repo/local_manifests
 
 # resync the repo source
 repo sync -j16 --force-sync
