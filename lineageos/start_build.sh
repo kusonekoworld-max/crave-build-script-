@@ -46,19 +46,16 @@ EOF
 # setup build env
 source build/envsetup.sh
 
-#
+# remove intermediates files with seapp
 find out/soong/.intermediates -type d -name "*seapp*" -exec rm -rf {} +
 
-# 
+# change modified date to make soong start again
 touch device/xiaomi/creek/BoardConfig.mk
 
 # prepare device menu
 breakfast creek userdebug
 
-# Clean intermediate cached system properties and staging dirs
-rm -rf out/target/product/creek/system/build.prop
-rm -rf out/target/product/creek/vendor/build.prop
-rm -rf out/target/product/creek/obj/KERNEL_OBJ
+# Clean staging dirs
 make installclean
 
 # start building
