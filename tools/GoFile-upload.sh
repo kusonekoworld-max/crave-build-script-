@@ -1,26 +1,28 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Check if a file argument is provided
-if [[ "$#" == '0' ]]; then
-    echo -e 'ERROR: No File Specified!' && exit 1
+# Check if file argument is provided
+if [ -z "$1" ]; then
+    echo "Usage: ./upload.sh <file_path>"
+    exit 1
 fi
 
 FILE="$1"
 
-# Upload file with progress bar
-# Use --progress-bar for a clean progress display
-RESPONSE=$(curl --progress-bar -X POST -F "file=@$FILE" "https://upload.gofile.io/uploadfile")
-
-# Extract download link
-LINK=$(echo "$RESPONSE" | jq -r '.data.downloadPage')
-
-# Check if upload succeeded
-if [[ "$LINK" == "null" || -z "$LINK" ]]; then
-    echo -e "\n Upload failed! Full response:"
-    echo "$RESPONSE"
+# Check if file exists
+if [ ! -f "$FILE" ]; then
+    echo "Error: File '$FILE' not found."
     exit 1
 fi
 
-# Print result
-echo "$LINK"
-echo
+FILENAME=$(basename "$FILE")
+
+echo "Uploading $FILENAME..."
+
+# Upload using curl to transfer.sh
+RESPONSE=$(curl --progress-bar --upload-file "$FILE" "https://transfer.sh/$FILENAME")
+
+echo ""
+echo "=========================================="
+echo " Upload Complete!"
+echo " Download Link: $RESPONSE"
+echo "=========================================="
