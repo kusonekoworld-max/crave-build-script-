@@ -22,7 +22,21 @@ echo "Uploading $FILENAME..."
 RESPONSE=$(curl --progress-bar --upload-file "$FILE" "https://transfer.sh/$FILENAME")
 
 echo ""
-echo "=========================================="
 echo " Upload Complete!"
 echo " Download Link: $RESPONSE"
-echo "=========================================="
+echo ""
+
+# send telegram notification
+if [ ! -f ".env" ]; then
+    echo "⚠️ .env file not found!"
+fi
+
+source .env
+curl -sS \
+    -X POST \
+    "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
+    --data-urlencode "chat_id=${TG_CHAT}" \
+    --data-urlencode "parse_mode=Markdown" \
+    --data-urlencode "disable_web_page_preview=true" \
+    --data-urlencode "text=Download Link: $RESPONSE" \
+    >/dev/null
