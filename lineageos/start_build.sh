@@ -5,6 +5,7 @@ clear
 # Define some requirements
 export BUILD_USERNAME="thas-k"
 export BUILD_HOSTNAME="creek"
+export TARGET_UNOFFICIAL_BUILD_ID="thas-k"
 export SKIP_ABI_CHECKS=true
 export WITH_DEXPREOPT=true
 export OTA_URL="https://xiaomicreek.github.io/OTA/LOS/builds/creek.json"
@@ -29,17 +30,30 @@ curl -sfLo vendorextract.sh -z vendorextract.sh https://raw.githubusercontent.co
 chmod +x vendorextract.sh
 ./vendorextract.sh
 
-# dynamically inject ota.mk into device tree
-cat << EOF > device/xiaomi/creek/ota.mk
-# Dynamically generated during build script execution
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += lineage.updater.uri=${OTA_URL}
+# dynamically inject features.mk into device tree
+cat << EOF > device/xiaomi/creek/features.mk
+# OTA url for future updates
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    lineage.updater.uri=${OTA_URL}
+
+# Inherit FastCharge configurations
+$(call inherit-product, packages/apps/FastCharge/fastcharge.mk)
+
+# Inherit FastCharge configurations
+$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)
 EOF
 
 # setup build env
 source build/envsetup.sh
 
+#
+find out/soong/.intermediates -type d -name "*seapp*" -exec rm -rf {} +
+
+# 
+touch device/xiaomi/creek/BoardConfig.mk
+
 # prepare device menu
-breakfast creek eng
+breakfast creek userdebug
 
 # Clean intermediate cached system properties and staging dirs
 rm -rf out/target/product/creek/system/build.prop
@@ -49,3 +63,14 @@ make installclean
 
 # start building
 mka bacon
+
+# Upload
+echo "upload to gofile..."
+if [ -f out/target/product/creek/lineage*.zip ]; then
+    curl -sfLo upload.sh -z upload.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/GoFile-upload.sh
+    chmod +x upload.sh ; ./upload.sh out/target/product/earth/*.zip
+    echo "upload done!"
+else
+    echo "no zip found at out/ dir..."
+    exit 1
+fi
