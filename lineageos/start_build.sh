@@ -2,12 +2,18 @@
 
 clear
 
-# Define some requirements
-export BUILD_USERNAME="thas-k"
+# Maintainer and Host Info
+export BUILD_USERNAME="nuruszama"
 export BUILD_HOSTNAME="creek"
-export TARGET_UNOFFICIAL_BUILD_ID="thas-k"
+
+# Custom Build Tag
+export LINEAGE_BUILDTYPE="TS-Edition"
+
+# Build Optimizations & Checks
 export SKIP_ABI_CHECKS=true
 export WITH_DEXPREOPT=true
+
+# Custom OTA Updater URL
 export OTA_URL="https://xiaomicreek.github.io/OTA/LOS/builds/creek.json"
 
 # remove device tree
