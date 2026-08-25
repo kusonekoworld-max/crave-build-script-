@@ -2,7 +2,7 @@
 
 # Check if file argument is provided
 if [ -z "$1" ]; then
-    echo "Usage: ./upload.sh <file_path>"
+    echo "Usage: $0 <path_to_file>" >&2
     exit 1
 fi
 
@@ -31,6 +31,7 @@ RESPONSE=$(curl --progress-bar -F "file=@$FILE" "https://${SERVER}.gofile.io/con
 
 # Output response link using command substitution
 DOWNLOAD_LINK=$(echo "$RESPONSE" | jq -r '.data.downloadPage')
+TEXT="📦 *Build Uploaded Successfully!*%0A*File:* \`${FILENAME}\`%0A*Download Link:* ${DOWNLOAD_LINK}"
 
 echo ""
 echo "Download Link: $DOWNLOAD_LINK"
@@ -42,16 +43,23 @@ if [ ! -f ".env" ]; then
     exit 1
 fi
 
-echo "Notifying on Telegram..."
+# Export all variables from .env automatically
+set -a
 source .env
+set +a
 
-# Ensure TG_TOKEN doesn't duplicate the "bot" prefix
-BOT_TOKEN="${TG_TOKEN#bot}"
+# Send Telegram notification
+if [[ -n "$TG_TOKEN" && -n "$TG_CHAT" ]]; then
+    echo "Notifying on Telegram..."
 
-curl -sS \
-    -X POST \
-    "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
-    --data-urlencode "chat_id=${TG_CHAT}" \
-    --data-urlencode "parse_mode=Markdown" \
-    --data-urlencode "disable_web_page_preview=true" \
-    --data-urlencode "text=Download Link: ${DOWNLOAD_LINK}"
+    # Ensure TG_TOKEN doesn't duplicate the "bot" prefix
+    BOT_TOKEN="${TG_TOKEN#bot}"
+
+    curl -sS \
+        -X POST \
+        "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+        --data-urlencode "chat_id=${TG_CHAT}" \
+        --data-urlencode "parse_mode=Markdown" \
+        --data-urlencode "disable_web_page_preview=true" \
+        --data-urlencode "text=${TEXT}" > /dev/null
+fi

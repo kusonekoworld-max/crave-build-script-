@@ -43,10 +43,12 @@ make installclean
 m pixelos
 
 # Upload
-echo "upload to gofile..."
-if [ -f out/target/product/creek/*202608*.zip ]; then
-    curl -sfLo upload.sh -z upload.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/GoFile-upload.sh
-    chmod +x upload.sh ; ./upload.sh out/target/product/earth/*.zip
+echo "uploading file..."
+ROM_DIR="out/target/product/creek/"
+ZIP_FILE=$(ls "$ROM_DIR" | grep "PixelOS-creek-*.zip$" | tail -n 1)
+if [ -n "${ZIP_FILE}" ]; then
+    curl -sfLo upload.sh -z upload.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/pd-upload.sh
+    chmod +x upload.sh ; ./upload.sh "${ROM_DIR}${ZIP_FILE}"
     echo "upload done!"
 else
     echo "no zip found at out/ dir..."

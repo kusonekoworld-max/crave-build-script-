@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Check if a file argument was passed to the script
+# Check if file argument is provided
 if [ -z "$1" ]; then
     echo "Usage: $0 <path_to_file>" >&2
     exit 1
@@ -14,7 +14,7 @@ if [ ! -f "$FILE" ]; then
     exit 1
 fi
 
-# Source .env for API keys and Telegram secrets
+# Load .env for credentials
 if [ ! -f ".env" ]; then
     echo "⚠️ .env file not found!" >&2
     exit 1
@@ -34,24 +34,25 @@ if ! command -v jq &> /dev/null; then
 fi
 
 FILENAME=$(basename "$FILE")
-echo "Uploading $FILENAME to PixelDrain..."
+echo "Uploading $FILENAME to Buzzheavier..."
 
-# Upload file to PixelDrain
-RESPONSE=$(curl --progress-bar -u ":$PIXELDRAIN" -T "$FILE" https://pixeldrain.com/api/file/)
-FILE_ID=$(echo "$RESPONSE" | jq -r '.id')
+# Upload file to Buzzheavier via PUT
+RESPONSE=$(curl --progress-bar -T "$FILE" "https://buzzheavier.com/$FILENAME")
 
-if [ -z "$FILE_ID" ] || [ "$FILE_ID" == "null" ]; then
+# Extract link from header/body response
+DOWNLOAD_LINK=$(echo "$RESPONSE" | jq -r '.url // .link // empty')
+
+# Fallback: parse direct URL if output is raw HTML/text
+if [ -z "$DOWNLOAD_LINK" ]; then
+    DOWNLOAD_LINK=$(echo "$RESPONSE" | grep -o 'https://buzzheavier.com/[a-zA-Z0-9]*' | head -n 1)
+fi
+
+if [ -z "$DOWNLOAD_LINK" ]; then
     echo "Error: Upload failed!" >&2
-    echo "PixelDrain Response: $RESPONSE" >&2
+    echo "Buzzheavier Response: $RESPONSE" >&2
     exit 1
 fi
 
-# Mark file public
-curl -s -u ":$PIXELDRAIN" -X POST "https://pixeldrain.com/api/file/$FILE_ID/publicity" \
-    -H "Content-Type: application/json" \
-    -d '{"public": true}' > /dev/null
-
-DOWNLOAD_LINK="https://pixeldrain.com/u/$FILE_ID"
 TEXT="📦 *Build Uploaded Successfully!*%0A*File:* \`${FILENAME}\`%0A*Download Link:* ${DOWNLOAD_LINK}"
 
 echo ""
