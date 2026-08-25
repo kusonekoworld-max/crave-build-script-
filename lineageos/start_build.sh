@@ -66,7 +66,7 @@ ROM_DIR="out/target/product/creek/"
 ZIP_FILE=$(ls "$ROM_DIR" | grep "lineage-.*-creek.zip$" | tail -n 1)
 if [ -n "${ZIP_FILE}" ]; then
     curl -sfLo upload.sh -z upload.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/GoFile-upload.sh
-    chmod +x upload.sh ; ./upload.sh "${ZIP_FILE}"
+    chmod +x upload.sh ; ./upload.sh "${ROM_DIR}${ZIP_FILE}"
     echo "upload done!"
 else
     echo "no zip found at out/ dir..."
