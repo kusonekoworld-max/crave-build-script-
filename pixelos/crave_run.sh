@@ -9,6 +9,7 @@ export OTA_URL="https://xiaomicreek.github.io/OTA/PixelOS/builds/creek.json"
 
 # remove device tree
 rm -rf .repo/local_manifests
+rm -rf hardware/xiaomi
 
 # re-initialize the lineage source
 repo init -u https://github.com/PixelOS-AOSP/android_manifest.git -b sixteen-qpr2 --git-lfs --depth=1
