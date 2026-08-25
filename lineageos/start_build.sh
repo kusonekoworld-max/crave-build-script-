@@ -33,8 +33,7 @@ chmod +x vendorextract.sh
 # dynamically inject features.mk into device tree
 cat << EOF > device/xiaomi/creek/features.mk
 # OTA url for future updates
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    lineage.updater.uri=${OTA_URL}
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += lineage.updater.uri=${OTA_URL}
 
 # Inherit FastCharge configurations
 \$(call inherit-product, packages/apps/FastCharge/fastcharge.mk)
