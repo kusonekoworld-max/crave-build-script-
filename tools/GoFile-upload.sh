@@ -47,5 +47,4 @@ curl -sS \
     --data-urlencode "chat_id=${TG_CHAT}" \
     --data-urlencode "parse_mode=Markdown" \
     --data-urlencode "disable_web_page_preview=true" \
-    --data-urlencode "text=Download Link: $RESPONSE" \
-    >/dev/null
+    --data-urlencode "text=Download Link: $RESPONSE"
