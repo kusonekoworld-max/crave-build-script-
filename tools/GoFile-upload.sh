@@ -25,11 +25,10 @@ SERVER=$(curl -s https://api.gofile.io/servers | jq -r '.data.servers[0].name')
 RESPONSE=$(curl --progress-bar -F "file=@$FILE" "https://${SERVER}.gofile.io/contents/uploadfile")
 
 # Output response link
-echo "$RESPONSE" | jq -r '.data.downloadPage'
+DOWNLOAD_LINK="$RESPONSE" | jq -r '.data.downloadPage'
 
 echo ""
-echo " Upload Complete!"
-echo " Download Link: $RESPONSE"
+echo " Download Link: $DOWNLOAD_LINK"
 echo ""
 
 # send telegram notification
@@ -47,4 +46,4 @@ curl -sS \
     --data-urlencode "chat_id=${TG_CHAT}" \
     --data-urlencode "parse_mode=Markdown" \
     --data-urlencode "disable_web_page_preview=true" \
-    --data-urlencode "text=Download Link: $RESPONSE"
+    --data-urlencode "text=Download Link: $DOWNLOAD_LINK"
