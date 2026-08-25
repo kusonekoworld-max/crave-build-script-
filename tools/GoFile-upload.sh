@@ -29,8 +29,11 @@ echo ""
 # send telegram notification
 if [ ! -f ".env" ]; then
     echo "⚠️ .env file not found!"
+    exit 1
 fi
 
+echo ""
+echo "notifying on telegram"
 source .env
 curl -sS \
     -X POST \
