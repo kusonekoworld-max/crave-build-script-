@@ -37,10 +37,10 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     lineage.updater.uri=${OTA_URL}
 
 # Inherit FastCharge configurations
-$(call inherit-product, packages/apps/FastCharge/fastcharge.mk)
+\$(call inherit-product, packages/apps/FastCharge/fastcharge.mk)
 
 # Inherit FastCharge configurations
-$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)
+\$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)
 EOF
 
 # setup build env
