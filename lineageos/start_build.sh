@@ -63,9 +63,11 @@ mka bacon
 
 # Upload
 echo "upload to gofile..."
-if [ -f out/target/product/creek/lineage-.*-creek.zip ]; then
+ROM_DIR="out/target/product/creek/"
+ZIP_FILE=$(ls "$ROM_DIR" | grep "lineage-.*-creek.zip$" | tail -n 1)
+if [ -n "${ZIP_FILE}" ]; then
     curl -sfLo upload.sh -z upload.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/GoFile-upload.sh
-    chmod +x upload.sh ; ./upload.sh out/target/product/creek/lineage-.*-creek.zip
+    chmod +x upload.sh ; ./upload.sh "${ZIP_FILE}"
     echo "upload done!"
 else
     echo "no zip found at out/ dir..."
