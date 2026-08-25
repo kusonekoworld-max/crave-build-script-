@@ -21,29 +21,37 @@ echo "Uploading $FILENAME..."
 # Fetch available server
 SERVER=$(curl -s https://api.gofile.io/servers | jq -r '.data.servers[0].name')
 
+if [ -z "$SERVER" ] || [ "$SERVER" == "null" ]; then
+    echo "Error: Failed to fetch active Gofile server."
+    exit 1
+fi
+
 # Upload file via multipart form-data
 RESPONSE=$(curl --progress-bar -F "file=@$FILE" "https://${SERVER}.gofile.io/contents/uploadfile")
 
-# Output response link
-DOWNLOAD_LINK="$RESPONSE" | jq -r '.data.downloadPage'
+# Output response link using command substitution
+DOWNLOAD_LINK=$(echo "$RESPONSE" | jq -r '.data.downloadPage')
 
 echo ""
-echo " Download Link: $DOWNLOAD_LINK"
+echo "Download Link: $DOWNLOAD_LINK"
 echo ""
 
-# send telegram notification
+# Send telegram notification
 if [ ! -f ".env" ]; then
     echo "⚠️ .env file not found!"
     exit 1
 fi
 
-echo ""
-echo "notifying on telegram"
+echo "Notifying on Telegram..."
 source .env
+
+# Ensure TG_TOKEN doesn't duplicate the "bot" prefix
+BOT_TOKEN="${TG_TOKEN#bot}"
+
 curl -sS \
     -X POST \
-    "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
+    "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
     --data-urlencode "chat_id=${TG_CHAT}" \
     --data-urlencode "parse_mode=Markdown" \
     --data-urlencode "disable_web_page_preview=true" \
-    --data-urlencode "text=Download Link: $DOWNLOAD_LINK"
+    --data-urlencode "text=Download Link: ${DOWNLOAD_LINK}"
