@@ -18,8 +18,14 @@ FILENAME=$(basename "$FILE")
 
 echo "Uploading $FILENAME..."
 
-# Upload using curl to transfer.sh
-RESPONSE=$(curl --progress-bar --upload-file "$FILE" "https://transfer.sh/$FILENAME")
+# Fetch available server
+SERVER=$(curl -s https://api.gofile.io/servers | jq -r '.data.servers[0].name')
+
+# Upload file via multipart form-data
+RESPONSE=$(curl --progress-bar -F "file=@$FILE" "https://${SERVER}.gofile.io/contents/uploadfile")
+
+# Output response link
+echo "$RESPONSE" | jq -r '.data.downloadPage'
 
 echo ""
 echo " Upload Complete!"
