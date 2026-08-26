@@ -7,7 +7,8 @@ export BUILD_USERNAME="nuruszama"
 export BUILD_HOSTNAME="creek"
 
 # Custom Build Tag
-export LINEAGE_BUILDTYPE="TS-Edition"
+export TARGET_UNOFFICIAL_BUILD_ID="TFAS-Edition"
+export LINEAGE_BUILDTYPE="TFAS-Edition"
 
 # Build Optimizations & Checks
 export SKIP_ABI_CHECKS=true
@@ -46,6 +47,9 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += lineage.updater.uri=${OTA_URL}
 
 # Inherit gapps configurations
 \$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)
+
+# Strip stock LineageOS apps (install gapps after boot)
+PRODUCT_PACKAGES := $(filter-out Twelve Dialer Messaging DeskClock Jelly Contacts Gallery2 Glimpse,$(PRODUCT_PACKAGES))
 
 EOF
 
