@@ -13,21 +13,23 @@ export LINEAGE_BUILDTYPE="TFAS-Edition"
 # Build Optimizations & Checks
 export SKIP_ABI_CHECKS=true
 export WITH_DEXPREOPT=true
+export WITH_UNLIMITED_PHOTOS := true
 
 # Custom OTA Updater URL
 export OTA_URL="https://xiaomicreek.github.io/OTA/LOS/builds/creek.json"
 
 # remove device tree
 rm -rf .repo/local_manifests
-rm -rf device/xiaomi/creek
-rm -rf device/xiaomi/creek-kernel
-rm -rf vendor/xiaomi/creek
 
 # re-initialize the lineage source
 repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs --depth=1
 
 #clone local manifest
 git clone https://github.com/XiaomiCreek/android.git -b lineage-23.2 --depth=1 .repo/local_manifests
+
+# Reset all local modifications and delete untracked/generated files
+repo forall -c "git reset --hard HEAD"
+repo forall -c "git clean -fd"
 
 # resync the repo source
 repo sync -j16 --force-sync
@@ -49,6 +51,11 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += lineage.updater.uri=${OTA_URL}
 \$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)
 
 EOF
+
+# Injecting PixelPropsUtils to frameworks/base
+curl -sfLo unlimited_photos.sh -z unlimited_photos.sh https://raw.githubusercontent.com/nuruszama/crave/creek/features/unlimited_photos.sh
+chmod +x unlimited_photos.sh
+./unlimited_photos.sh
 
 # setup build env
 source build/envsetup.sh
