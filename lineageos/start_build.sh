@@ -18,6 +18,9 @@ export OTA_URL="https://xiaomicreek.github.io/OTA/LOS/builds/creek.json"
 
 # remove device tree
 rm -rf .repo/local_manifests
+rm -rf device/xiaomi/creek
+rm -rf device/xiaomi/creek-kernel
+rm -rf vendor/xiaomi/creek
 
 # re-initialize the lineage source
 repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs --depth=1
@@ -69,7 +72,7 @@ echo "upload to gofile..."
 ROM_DIR="out/target/product/creek/"
 ZIP_FILE=$(ls "$ROM_DIR" | grep "lineage-.*-creek.zip$" | tail -n 1)
 if [ -n "${ZIP_FILE}" ]; then
-    curl -sfLo upload.sh -z upload.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/buzzheavier-upload.sh
+    curl -sfLo upload.sh -z upload.sh https://raw.githubusercontent.com/nuruszama/crave/creek/tools/GoFile-upload.sh
     chmod +x upload.sh ; ./upload.sh "${ROM_DIR}${ZIP_FILE}"
     echo "upload done!"
 else
