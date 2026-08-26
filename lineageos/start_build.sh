@@ -13,7 +13,7 @@ export LINEAGE_BUILDTYPE="TFAS-Edition"
 # Build Optimizations & Checks
 export SKIP_ABI_CHECKS=true
 export WITH_DEXPREOPT=true
-export WITH_UNLIMITED_PHOTOS := true
+export WITH_UNLIMITED_PHOTOS=true
 
 # Custom OTA Updater URL
 export OTA_URL="https://xiaomicreek.github.io/OTA/LOS/builds/creek.json"
