@@ -44,9 +44,6 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += lineage.updater.uri=${OTA_URL}
 # Inherit gapps configurations
 \$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)
 
-# Inherit additional gapps replacements
-\$(call inherit-product, vendor/gapps/extra/extra-64.mk)
-
 EOF
 
 # setup build env
