@@ -2,11 +2,14 @@
 
 FRAMEWORKS="frameworks/base"
 
-echo "================================================="
-echo " Injecting PixelPropsUtils to frameworks/base... "
-echo "================================================="
+color="\033[0;32m"
+end="\033[0m"
 
-# 1. Add PixelPropsUtils.java
+echo "----------------------------------------------------"
+echo -e "${color}Injecting PixelPropsUtils to frameworks/base...${end}"
+echo ""
+
+# Add PixelPropsUtils.java
 mkdir -p "$FRAMEWORKS/core/java/com/android/internal/util/lineage"
 
 cat << 'EOF' > "$FRAMEWORKS/core/java/com/android/internal/util/lineage/PixelPropsUtils.java"
@@ -59,7 +62,7 @@ public class PixelPropsUtils {
 }
 EOF
 
-# 2. Hook Application.java
+# Hook Application.java
 APP_JAVA="$FRAMEWORKS/core/java/android/app/Application.java"
 
 if ! grep -q "PixelPropsUtils.setProps" "$APP_JAVA"; then
@@ -69,4 +72,6 @@ else
     echo " -> Application.java already hooked."
 fi
 
-echo "Done!"
+echo "----------------------------------------------------"
+echo -e "${color}Injected PixelPropsUtils...${end}"
+echo ""
