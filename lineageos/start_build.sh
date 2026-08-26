@@ -2,6 +2,10 @@
 
 clear
 
+# Reset all local modifications and delete untracked/generated files
+repo forall -c "git reset --hard HEAD"
+repo forall -c "git clean -fd"
+
 # Maintainer and Host Info
 export BUILD_USERNAME="nuruszama"
 export BUILD_HOSTNAME="creek"
@@ -26,10 +30,6 @@ repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs 
 
 #clone local manifest
 git clone https://github.com/XiaomiCreek/android.git -b lineage-23.2 --depth=1 .repo/local_manifests
-
-# Reset all local modifications and delete untracked/generated files
-repo forall -c "git reset --hard HEAD"
-repo forall -c "git clean -fd"
 
 # resync the repo source
 repo sync -j16 --force-sync
