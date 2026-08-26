@@ -48,9 +48,6 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += lineage.updater.uri=${OTA_URL}
 # Inherit gapps configurations
 \$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)
 
-# Strip stock LineageOS apps (install gapps after boot)
-PRODUCT_PACKAGES := $(filter-out Twelve Dialer Messaging DeskClock Jelly Contacts Gallery2 Glimpse,$(PRODUCT_PACKAGES))
-
 EOF
 
 # setup build env
