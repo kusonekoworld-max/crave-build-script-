@@ -1,35 +1,37 @@
 #!/bin/bash
 
+# Check if .env file exists
+if [ ! -f ".env" ]; then
+    echo "⚠️ .env file not found!"
+else
+    # Load your local secrets
+    set -o allexport
+    source .env
+    set +o allexport
+fi
+
 # Define some requirements
-export BUILD_USERNAME="thas-k"
-export BUILD_HOSTNAME="creek"
+export BUILD_USERNAME="${BUILD_USERNAME}"
+export BUILD_HOSTNAME="${BUILD_HOSTNAME}"
 export SKIP_ABI_CHECKS=true
-export WITH_DEXPREOPT=true
-export OTA_URL="https://xiaomicreek.github.io/OTA/PixelOS/builds/creek.json"
+export LINEAGE_UPDATER_URI="${OTA_URL}"
 
 # remove device tree
 rm -rf .repo/local_manifests
-rm -rf hardware/xiaomi
+rm -rf device/xiaomi/creek
+rm -rf vendor/xiaomi/creek
 
 # re-initialize the lineage source
 repo init -u https://github.com/PixelOS-AOSP/android_manifest.git -b sixteen-qpr2 --git-lfs --depth=1
 
 #clone local manifest
-git clone https://github.com/XiaomiCreek/android.git -b PixelOS-16 --depth=1 .repo/local_manifests
+git clone https://github.com/XiaomiCreek/android.git -b lineage-23.2 --depth=1 .repo/local_manifests
 
 # resync the repo source
 /opt/crave/resync.sh
 
-# dynamically inject ota.mk into device tree
-cat << EOF > device/xiaomi/creek/features.mk
-# OTA url for future updates
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    lineage.updater.uri=${OTA_URL} \
-    persist.ota.url=${OTA_URL}
-
-# Inherit FastCharge configurations
-$(call inherit-product, packages/apps/FastCharge/fastcharge.mk)
-EOF
+# Adapt device tree from LineageOS to PixelOS
+curl -sf https://raw.githubusercontent.com/nuruszama/crave/creek/pixelos/pixelos_changes.sh | bash
 
 # setup build env
 source build/envsetup.sh
