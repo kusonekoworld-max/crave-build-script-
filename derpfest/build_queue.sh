@@ -3,13 +3,6 @@
 cd "$(dirname "$0")"
 clear
 
-if [ ! -f ".env" ]; then echo "⚠️ .env file not found! Exiting ..."
-    exit 0
-fi
-
-source .env
-echo ">> Building $ROM_NAME for $DEVICE"
-
 LOG_FILE="crave_build.log"
 rm -f "$LOG_FILE"
 
