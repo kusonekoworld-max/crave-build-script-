@@ -62,8 +62,7 @@ repo init \
     -u "$MANIFEST_URL" \
     -b "$MANIFEST_BRANCH" \
     --git-lfs \
-    --depth=1 \
-    --no-repo-verify
+    --depth=1
 
 # ==========================================
 # CLONE LOCAL MANIFEST
@@ -78,12 +77,17 @@ git clone \
     .repo/local_manifests
 
 # ==========================================
-# SYNC SOURCE (via crave devspace resync helper)
+# SYNC SOURCE
 # ==========================================
 
 echo "[*] Syncing source..."
 
-/opt/crave/resync.sh
+repo sync \
+    -c \
+    --force-sync \
+    --no-clone-bundle \
+    --no-tags \
+    -j16
 
 # ==========================================
 # CHECK DEVICE TREE
