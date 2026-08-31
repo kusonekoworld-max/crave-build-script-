@@ -21,7 +21,7 @@ export SKIP_ABI_CHECKS=true
 export WITH_DEXPREOPT=true
 
 DEVICE="creek"
-LUNCH_TARGET="lineage_creek-bp4a-user"
+LUNCH_TARGET="derp_creek-userdebug"
 
 MANIFEST_URL="https://github.com/DerpFest-AOSP/android_manifest.git"
 MANIFEST_BRANCH="16.2"
@@ -62,7 +62,8 @@ repo init \
     -u "$MANIFEST_URL" \
     -b "$MANIFEST_BRANCH" \
     --git-lfs \
-    --depth=1
+    --depth=1 \
+    --no-repo-verify
 
 # ==========================================
 # CLONE LOCAL MANIFEST
@@ -77,17 +78,12 @@ git clone \
     .repo/local_manifests
 
 # ==========================================
-# SYNC SOURCE
+# SYNC SOURCE (via crave devspace resync helper)
 # ==========================================
 
 echo "[*] Syncing source..."
 
-repo sync \
-    -c \
-    --force-sync \
-    --no-clone-bundle \
-    --no-tags \
-    -j16
+/opt/crave/resync.sh
 
 # ==========================================
 # CHECK DEVICE TREE
@@ -147,7 +143,7 @@ lunch "$LUNCH_TARGET"
 # VERIFY TARGET
 # ==========================================
 
-if [ "$TARGET_PRODUCT" != "lineage_creek" ]; then
+if [ "$TARGET_PRODUCT" != "derp_creek" ]; then
     echo
     echo "[!] Wrong TARGET_PRODUCT:"
     echo "    $TARGET_PRODUCT"
