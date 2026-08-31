@@ -15,7 +15,6 @@ while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
 
     crave run --projectID 64 --no-patch -- "curl -sf https://raw.githubusercontent.com/kusonekoworld-max/crave-build-script-/creek/derpfest/crave_run.sh | bash" 2>&1 | tee "$LOG_FILE"
 
-
     CRAVE_STATUS=${PIPESTATUS[0]}
 
     if [ $CRAVE_STATUS -eq 0 ]; then
