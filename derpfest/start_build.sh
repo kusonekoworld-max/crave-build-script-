@@ -21,6 +21,9 @@ export TARGET_UNOFFICIAL_BUILD_ID="DerpFest-Edition"
 export SKIP_ABI_CHECKS=true
 export WITH_DEXPREOPT=true
 
+# Include GApps in the build
+export WITH_GAPPS=true
+
 # remove local manifest
 rm -rf .repo/local_manifests
 
