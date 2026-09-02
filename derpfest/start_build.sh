@@ -1,10 +1,14 @@
 #!/bin/bash
+set -e
 
 clear
 
 # Reset all local modifications and delete untracked/generated files
-repo forall -c "git reset --hard HEAD"
-repo forall -c "git clean -fd"
+# (skip if this is a fresh workspace with no .repo yet)
+if [ -d .repo ]; then
+    repo forall -c "git reset --hard HEAD"
+    repo forall -c "git clean -fd"
+fi
 
 # Maintainer and Host Info
 export BUILD_USERNAME="kusonekoworld"
@@ -17,14 +21,16 @@ export TARGET_UNOFFICIAL_BUILD_ID="DerpFest-Edition"
 export SKIP_ABI_CHECKS=true
 export WITH_DEXPREOPT=true
 
-# remove device tree
+# remove local manifest
 rm -rf .repo/local_manifests
 
 # re-initialize the DerpFest source
-repo init -u https://github.com/DerpFest-AOSP/android_manifest.git -b 16.2 --git-lfs --depth=1
+repo init -u https://github.com/DerpFest-AOSP/android_manifest.git -b 16.2 --git-lfs
 
-# clone local manifest
-git clone https://github.com/kusonekoworld-max/local_manifests.git -b main --depth=1 .repo/local_manifests
+# fetch local manifest (single file, not a repo)
+mkdir -p .repo/local_manifests
+curl -sfLo .repo/local_manifests/local_manifest.xml \
+    https://raw.githubusercontent.com/XiaomiCreek/android/lineage-23.2/local_manifest.xml
 
 # resync the repo source
 repo sync -j16 --force-sync
@@ -32,8 +38,8 @@ repo sync -j16 --force-sync
 # setup build env
 source build/envsetup.sh
 
-# remove intermediates files with seapp
-find out/soong/.intermediates -type d -name "*seapp*" -exec rm -rf {} +
+# remove intermediates files with seapp (safe if out/ doesn't exist yet)
+find out/soong/.intermediates -type d -name "*seapp*" -exec rm -rf {} + 2>/dev/null || true
 
 # change modified date to make soong start again
 touch device/xiaomi/creek/BoardConfig.mk
